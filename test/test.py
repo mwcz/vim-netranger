@@ -387,7 +387,11 @@ def test_NETRDeleteSingle():
 def test_delete_fail_if_fs_lock():
     nvim.input('v')
     lock_fs()
-    nvim.input('X')
+    for line in nvim.current.buffer:
+        print(line)
+    nvim.input('D')
+    for line in nvim.current.buffer:
+        print(line)
     assert_content('dir', ind=0, hi='pick', hi_fg=True)
     unlock_fs()
 
