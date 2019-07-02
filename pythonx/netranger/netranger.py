@@ -176,40 +176,7 @@ class EntryNode(Node):
         self.ori_highlight = self.highlight
 
     def re_stat(self, fs, lazy=False):
-        self.linkto = None
-        if os.path.islink(self.fullpath):
-            self.linkto = os.readlink(self.fullpath)
-
-        if not lazy:
-            try:
-                self.stat = os.stat(self.fullpath)
-            except FileNotFoundError:
-                self.stat = None
-        else:
-            self.stat = None
-
-        if self.stat:
-            try:
-                self.size = fs.size_str(self.fullpath, self.stat)
-            except PermissionError:
-                self.size = '?'
-
-            self.acl = fs.acl_str(self.stat)
-            try:
-                if platform == "win32":
-                    self.user = getenv("USERNAME")
-                    self.group = getenv("USERDOMAIN")
-                else:
-                    self.user = pwd.getpwuid(self.stat.st_uid)[0]
-                    self.group = grp.getgrgid(self.stat.st_gid)[0]
-            except KeyError:
-                self.user = self.stat.st_uid
-                self.group = self.stat.st_gid
-        else:
-            self.size = ''
-            self.acl = ''
-            self.user = ''
-            self.group = ''
+        pass
 
     def decide_hi(self):
         if self.linkto is not None:
